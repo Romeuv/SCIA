@@ -36,8 +36,8 @@
 </div>
 
 <div style="display: flex; flex-direction: 'row';">
-   <img src="./.github/Dashboard.PNG" width="180">
-   <img src="./.github/tabela.PNG" width="180">
+   <img src="./.github/Dashboard.PNG" width="400px">
+   <img src="./.github/tabela.PNG" width="400px">
 </div>
 
 # :computer: Tecnologias
