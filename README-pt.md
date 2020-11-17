@@ -1,18 +1,14 @@
 <p align="center">
-   <img src="./.github/logo.png" alt="Happy" width="360"/>
+   <img src="./.github/logo.png" alt="SCIA" width="360"/>
 </p>
-
 <p align="center">	
    <a href="https://www.linkedin.com/in/romeuvicente/">
       <img alt="Romeu Vicente" src="https://img.shields.io/badge/-RomeuVicente-8257E5?style=flat&logo=Linkedin&logoColor=white" />
    </a>
-  <a aria-label="Completed" href="https://nextlevelweek.com/episodios/omnistack/edicao/2">
-    <img src="https://img.shields.io/badge/Proffy-NLW 2.0-8257E5?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAALVBMVEVHcExxWsF0XMJzXMJxWcFsUsD///9jRrzY0u6Xh9Gsn9n39fyMecy0qd2bjNJWBT0WAAAABHRSTlMA2Do606wF2QAAAGlJREFUGJVdj1cWwCAIBLEsRU3uf9xobDH8+GZwUYi8i6ucJwrxKE+7D0G9Q4vlYqtmCSjndr4CgCgzlyFgfKfKCVO0LrPKjmiqMxGXkJwNnXskqWG+1oSM+BSwD8f29YLNjvx/OQrn+g99oQSoNmt3PgAAAABJRU5ErkJggg=="></img>
-  </a>
   <img alt="License" src="https://img.shields.io/badge/license-MIT-8257E5">
 </p>
 
-> :rocket: Projeto elaborado conhecer os orfanatos existentes, feito na Next Level Week #3 @Rocketseat
+> :rocket: Projeto final para visualizar grandezas em aviários e o seu respectivo controlo, @ESTG
 
 <p align="center">
     <a href="README.md">Inglês</a>
@@ -21,7 +17,7 @@
  </p>
 
 <div align="center">
-  <sub>The NLW #3 project. Built with ❤︎ by
+  <sub>Projecto final. Built with ❤︎ by
     <a href="https://github.com/Romeuv">Romeu Vicente</a>
   </sub>
 </div>
@@ -35,90 +31,45 @@
 
 ### Web Screenshot
 <div style="display: flex; flex-direction: 'row'; align-items: 'center';">
-   <img src="./.github/web-landing.png" width="400px">
-   <img src="./.github/web-list.png" width="400px">
+   <img src="./.github/Home.PNG" width="400px">
+   <img src="./.github/Graficos.PNG" width="400px">
 </div>
 
-### Mobile Screenshot
 <div style="display: flex; flex-direction: 'row';">
-   <img src="./.github/mobile-splash.png" width="180">
-   <img src="./.github/mobile-onboarding.png" width="180">
-   <img src="./.github/mobile-home.png" width="180">
-   <img src="./.github/mobile-favoritos.png" width="180">
+   <img src="./.github/Dashboard.PNG" width="180">
+   <img src="./.github/tabela.PNG" width="180">
 </div>
 
 # :computer: Tecnologias
 Esse projeto foi desenvolvido utilizando as seguintes tecnologias:
 
-* [Typescript](https://www.typescriptlang.org/)      
-* [React](https://reactjs.org/)      
-* [Expo](https://expo.io/)       
-* [Express](https://expressjs.com/) 
-* [Node.js](https://nodejs.org/en/)
-* [ReactJS](https://reactjs.org/)
-* [React Native](https://reactnative.dev/)
-* [TypeORM](https://typeorm.io/#/)
-* [Yup](https://github.com/jquense/yup)
-* [Axios](https://github.com/axios/axios)
-* [React Router DOM](https://reacttraining.com/react-router/)
-* [React Navigation](https://reactnavigation.org/)
+* [Javascript](https://www.javascript.com/)      
+* [Amcharts](https://www.amcharts.com/)   
 
 # :rocket: Funcionalidades
 
-* Site para registo e visualização de orfanatos.
-* App para registo e visualização de orfanatos.
+* Site para registo e visualização dos aviários.
+* App para registo e visualização dos aviários.
 
 # :construction_worker: Como Executar
 ```bash
 # Clone o Repositório
-$ git clone https://github.com/Romeuv/Happy.git
+$ git clone https://github.com/Romeuv/Scia.git
 ```
-### 📦 Executar a API
-
-```bash
-# Vá até a pasta do servidor
-$ cd Happy/backend
-
-# Instale as dependências
-$ yarn install
-
-# Execute a aplicação
-$ yarn start
-```
-Acesse a API: http://localhost:3333/
-
 ### 💻 Executar o Project Web
 
 ```bash
-# Vá até a pasta web
-$ cd Happy/web
-
-# Instale as dependências
-$ yarn install
+# Vá até a pasta do projecto
+$ cd Scia
 
 # Execute a aplicação
-$ yarn start
+$ index.html
 ```
 Acesse: http://localhost:3000/ para ver o resultado.
 
-### 📱 Executar o Mobile Project
-Para executar o projeto mobile é nessesário instar o [expo](https://play.google.com/store/apps/details?id=host.exp.exponent) no telefone, ou em um emulador **android/ios**.
-
-```bash
-# Vá até a pasta mobile
-$ cd Happy/mobile
-
-# Instale as dependências
-$ yarn install
-
-# Execute a aplicação
-$ yarn start
-```
-Then scan QRCode with the [expo] app (https://play.google.com/store/apps/details?id=host.exp.exponent) or run on an emulator.
-
 # :bug: Bugs
 
-Encontrou um bug? **Crie uma nova issue** com o respectivo titulo e descrição na página do bug do [Happy](https://github.com/Romeuv/Happy/issues) Repositorio. Se já encontrou uma solução para o bug, **de o seu pull request**.
+Encontrou um bug? **Crie uma nova issue** com o respectivo titulo e descrição na página do bug da [Scia](https://github.com/Romeuv/Happy/issues) Repositorio. Se já encontrou uma solução para o bug, **de o seu pull request**.
 
 # :closed_book: Licença
 
