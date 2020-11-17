@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+
+
+
+    <title>DASH_SCIA</title>
+</head>
+
+<body onload="checkLog_in()">
+    <div class="flex-dashboard">
+        <sidebar>
+            <div class="sidebar-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="tabelas.html"><i class="fas fa-table"></i> Tabelas</a>
+                    </li>
+                    <li>
+                        <a href="Registos.html"><i class="fas fa-file-import"></i> Registos</a>
+                    </li>
+                    <li class="selected">
+                        <a href="pavilhoes.html"><i class="fab fa-houzz"></i> Pavilhões</a>
+                    </li>
+                    <li>
+                        <a href="Donwload.html"><i class="fas fa-cloud-download-alt"></i> Gráficos</a>
+                    </li>
+                    <li>
+                        <a href="definicao.html"><i class="fas fa-tachometer-alt"></i> Manual</a>
+                    </li>
+                    <li>
+                        <a href="Temp.html"><i class="fas fa-cloud-sun"></i> Meteo</a>
+                    </li>
+                    <li>
+                        <a href="Criador.html"><i class="fas fa-question-circle"></i> Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        <main>
+            <header>
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fa fa-bars"></i>
+                <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923"><img src="https://w.bookcdn.com/weather/picture/13_16923_1_8_ffffff_158_fff5d9_000000_0a0a0a_3_fff5d9_333333_0_6.png?scode=124&domid=&anc_id=6641" alt="booked.net" /></a>
+                <a onclick="log_out()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </header>
+            <div class="main-content">
+                <div class="main-content-title">
+                </div>
+                <div class="main-content">
+                    <form>
+                        <div class="form-group">
+                            <label for="largura">Largura</label>
+                            <input type="number" class="form-control" id="largura_lable">
+                        </div>
+                        <div class="form-group">
+                            <label for="Comprimento">Comprimento</label>
+                            <input type="number" class="form-control" id="comprimento_lable">
+                        </div>
+                        <div class="form-group">
+                            <label for="Altura">Altura</label>
+                            <input type="number" class="form-control" id="altura_lable">
+                        </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="check_temp">
+                            <label class="custom-control-label" for="check_temp">Controlar Temperatura</label>
+                        </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="check_hum">
+                            <label class="custom-control-label" for="check_hum">Controlar Humidade</label>
+                        </div>
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="check_per">
+                            <label class="custom-control-label" for="check_per">Controlar persianas</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="Area">Area</label>
+                            <input type="text" class="form-control" id="Area_lable" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="numAves">Numero de aves</label>
+                            <input type="text" class="form-control" id="numAves_lable" readonly>
+                        </div>
+
+                        <button type="button" onClick="insert_register()" id="save">Save</button>
+                    </form>
+
+                    <div class="content" id="ajax-content"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome/js/all.min.js"></script>
+    <script src="../js/ajax.js"></script>
+    <script src="../plugins/charts/chart.min.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/googleSheed.js"></script>
+    <script src="../js/TableCreate.js"></script>
+
+    <script>
+        function checkLog_in() {
+            var text = "";
+            var key = sessionStorage.getItem('KEY');
+
+
+            if (key == "Log_in") {
+
+
+
+            } else {
+                location.replace("../index.html");
+            }
+        }
+
+        function log_out() {
+            sessionStorage.setItem('KEY', 'Log_out');
+            location.replace("../index.html");
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            setInterval(function() {
+                getValuesFromGoogleSheet(UpdateDatatable, "2");
+
+                function UpdateDatatable(results) {
+                    if (results.message == "success" && results.data.records.length > 0) {
+                        update_value("1");
+                    }
+                }
+            }, 1000);
+            update_value("2");
+
+        });
+
+        function update_value(key) {
+
+            getValuesFromGoogleSheet(UpdateDatatable, "2");
+
+            function UpdateDatatable(results) {
+                if (results.message == "success" && results.data.records.length > 0) {
+                    var j = 0;
+                    switch (key) {
+                        case "1":
+                            var Area = results.data.records[j]["Area"];
+                            var numAves = results.data.records[j]["numAves"];
+
+                            document.getElementById("Area_lable").value = Area;
+                            document.getElementById("numAves_lable").value = numAves;
+                            break;
+                        case "2":
+                            var largura = results.data.records[j]["largura"];
+                            var Comprimento = results.data.records[j]["comprimento"];
+                            var Altura = results.data.records[j]["Altura"];
+                            var check_tempe = results.data.records[j]['check_temp'];
+                            var check_humi = results.data.records[j]['check_hum'];
+                            var check_pere = results.data.records[j]['check_per'];
+                            var Area = results.data.records[j]["Area"];
+                            var numAves = results.data.records[j]["numAves"];
+
+                            var botao_temp = document.getElementById("check_temp");
+                            var botao_humi = document.getElementById("check_hum");
+                            var botao_pere = document.getElementById("check_per");
+
+                            document.getElementById("Area_lable").value = Area;
+                            document.getElementById("numAves_lable").value = numAves;
+                            document.getElementById("largura_lable").value = largura;
+                            document.getElementById("comprimento_lable").value = Comprimento;
+                            document.getElementById("altura_lable").value = Altura;
+
+                            botao_temp.checked = check_tempe;
+                            botao_humi.checked = check_humi;
+                            botao_pere.checked = check_pere;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+        }
+
+        function insert_register() {
+            var script_url = "https://script.google.com/macros/s/AKfycbyw_XM9GruqPOsffYAxBlY185z-lSvYqvqrCk1UeImoqRwwmX5_/exec";
+
+
+            var largura = document.getElementById("largura_lable").value;
+            var Comprimento = document.getElementById("comprimento_lable").value;
+            var altura = document.getElementById("altura_lable").value;
+            var check_tempe = document.getElementById("check_temp").checked;
+            var check_humi = document.getElementById('check_hum').checked;
+            var check_pere = document.getElementById('check_per').checked;
+
+            var url = script_url + "?callback=ctrlq&largura=" + largura + "&comprimento=" + Comprimento + "&altura=" + altura + "&check_temp=" + check_tempe + "&check_hum=" + check_humi + "&check_per=" + check_pere + "&action=pav_update";
+
+            console.log(url);
+            var request = jQuery.ajax({
+                crossDomain: true,
+                url: url,
+                method: "GET",
+                dataType: "jsonp"
+            })
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <title>DASH_SCIA</title>
+</head>
+
+<body onload="checkLog_in()">
+    <div class="flex-dashboard">
+        <sidebar>
+            <div class="sidebar-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="tabelas.html"><i class="fas fa-table"></i> Tabelas</a>
+                    </li>
+                    <li class="selected">
+                        <a href="Registos.html"><i class="fas fa-file-import"></i> Registos</a>
+                    </li>
+                    <li>
+                        <a href="pavilhoes.html"><i class="fab fa-houzz"></i> Pavilhões</a>
+                    </li>
+                    <li>
+                        <a href="Donwload.html"><i class="fas fa-cloud-download-alt"></i> Gráficos</a>
+                    </li>
+                    <li>
+                        <a href="definicao.html"><i class="fas fa-tachometer-alt"></i> Manual</a>
+                    </li>
+                    <li>
+                        <a href="Temp.html"><i class="fas fa-cloud-sun"></i> Meteo</a>
+                    </li>
+                    <li>
+                        <a href="Criador.html"><i class="fas fa-question-circle"></i> Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        <main>
+            <header>
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fa fa-bars"></i>
+                <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923"><img src="https://w.bookcdn.com/weather/picture/13_16923_1_8_ffffff_158_fff5d9_000000_0a0a0a_3_fff5d9_333333_0_6.png?scode=124&domid=&anc_id=6641" alt="booked.net" /></a>
+                <a onclick="log_out()"><i class="fas fa-sign-out-alt "></i> Sair</a>
+            </header>
+            <div class="main-content">
+                <div class="main-content-title">
+                    <h2>Registos</h2>
+
+                </div>
+                <div class="panel-row">
+                    <button class="panel panel-50" onclick="fetchContent (this)" a-view="registos" a-folder="registos"><i class="fas fa-plus"></i>Nova produção</button>
+                    <button class="panel panel-50" onclick="fetchContent (this)" a-view="visualizaRegistos" a-folder="registos"><i class="far fa-eye"></i>Visualizar</button>
+                </div>
+
+                <div class="content" id="ajax-content">
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../plugins/bootstrap/js/bootstrap.min.js "></script>
+    <script src="../plugins/fontawesome/js/all.min.js "></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../js/ajax.js"></script>
+
+    <script>
+        function checkLog_in() {
+            var text = "";
+            var key = sessionStorage.getItem('KEY');
+
+
+            if (key == "Log_in") {} else {
+                location.replace("../index.html");
+            }
+        }
+
+        function log_out() {
+            sessionStorage.setItem('KEY', 'Log_out');
+            location.replace("../index.html");
+        }
+    </script>
+</body>
+
+</html>

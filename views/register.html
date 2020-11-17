@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <title>DASH_SCIA</title>
+</head>
+
+<body>
+    <div class="register-parent">
+        <div class="register">
+            <div class="register-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="Name">Nome</label>
+                    <input type="text" class="form-control" id="Name_reg" placeholder="Nome completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input type="email" class="form-control" id="Email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+
+                    <label for="exampleInputPassword1">Insira novamente a Password</label>
+                    <input type="password" class="form-control" id="confirm_password" placeholder="Confirm Password" required>
+                </div>
+                <div class="form-group">
+                    <label for="Pavilhoes">Numero de pavilhoes</label>
+                    <select class="form-control" id="Pavilhoes">
+                      <option>1</option>
+                      <option>2</option>
+                      <option>3</option>
+                      <option>4</option>
+                      <option>5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Key">Chave de registo</label>
+                    <input type="text" class="form-control" id="Key" placeholder="Key" pattern="[A-Za-z]{8}" title="Three letter country code" required>
+                </div>
+                <fieldset>
+                    <button type="button" id="submit_but" onclick="insert_value()" class="btn pure-button pure-button-primary">Registar</button></fieldset>
+            </form>
+
+        </div>
+
+    </div>
+
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome/js/all.min.js"></script>
+    <script src="../plugins/charts/chart.min.js"></script>
+    <script src="../js/googleSheed.js"></script>
+
+    <script>
+        var script_url = "https://script.google.com/macros/s/AKfycbyw_XM9GruqPOsffYAxBlY185z-lSvYqvqrCk1UeImoqRwwmX5_/exec";
+        var password = document.getElementById("password"),
+            confirm_password = document.getElementById("confirm_password");
+
+        var password = document.getElementById("password"),
+            confirm_password = document.getElementById("confirm_password");
+
+
+        var pass, pass1;
+
+        function validatePassword() {
+            if (password.value != confirm_password.value) {
+                confirm_password.setCustomValidity("Passwords Don't Match");
+                pass = 0;
+            } else {
+                confirm_password.setCustomValidity('');
+                pass = 1;
+            }
+        }
+
+        password.onchange = validatePassword;
+        confirm_password.onkeyup = validatePassword;
+
+        document.getElementById("submit_but").onclick = function() {
+            if (pass) {
+                insert_register();
+            }
+        };
+
+        function insert_register() {
+
+            var name = document.getElementById("Name_reg").value;
+            var email = document.getElementById("Email").value;
+            var Password = document.getElementById("password").value;
+            var npav = document.getElementById("Pavilhoes").value;
+            var key = document.getElementById("Key").value;
+
+            var url = script_url + "?callback=ctrlq&name=" + name + "&email=" + email + "&Password=" + Password + "&npav=" + npav + "&key=" + key + "&action=insert_register";
+
+            console.log(url);
+            var request = jQuery.ajax({
+                crossDomain: true,
+                url: url,
+                method: "GET",
+                dataType: "jsonp"
+            })
+        }
+
+        function ctrlq(e) {
+            if (e.result == "E-mail already exist..") {
+                alert(e.result);
+            } else {
+                location.replace("../index.html");
+            }
+        }
+        // Make an AJAX call to Google Script
+    </script>
+</body>
+
+</html>

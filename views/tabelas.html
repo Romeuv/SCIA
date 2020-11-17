@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome/js/all.min.js"></script>
+    <script src="../js/ajax.js"></script>
+    <script src="../plugins/charts/chart.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.css"
+    />
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.js"></script>
+
+
+
+    <title>DASH_SCIA</title>
+</head>
+
+
+<body onload="checkLog_in()">
+
+    <div class="flex-dashboard">
+        <sidebar>
+            <div class="sidebar-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li class="selected">
+                        <a href="tabelas.html"><i class="fas fa-table"></i> Tabelas</a>
+                    </li>
+                    <li>
+                        <a href="Registos.html"><i class="fas fa-file-import"></i> Registos</a>
+                    </li>
+                    <li>
+                        <a href="pavilhoes.html"><i class="fab fa-houzz"></i> Pavilhões</a>
+                    </li>
+                    <li>
+                        <a href="Donwload.html"><i class="fas fa-cloud-download-alt"></i> Gráficos</a>
+                    </li>
+                    <li>
+                        <a href="definicao.html"><i class="fas fa-tachometer-alt"></i> Manual</a>
+                    </li>
+                    <li>
+                        <a href="Temp.html"><i class="fas fa-cloud-sun"></i> Meteo</a>
+                    </li>
+                    <li>
+                        <a href="Criador.html"><i class="fas fa-question-circle"></i> Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        <main>
+            <header>
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fa fa-bars"></i>
+                <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923"><img src="https://w.bookcdn.com/weather/picture/13_16923_1_8_ffffff_158_fff5d9_000000_0a0a0a_3_fff5d9_333333_0_6.png?scode=124&domid=&anc_id=6641" alt="booked.net" /></a>
+                <a onclick="log_out()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </header>
+
+            <div class="main-content">
+                <div class="main-content-title">
+                </div>
+
+
+
+
+                <table id="table_dados" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tempo</th>
+                            <th>Temperatura</th>
+                            <th>Humidade</th>
+                            <th>Co2</th>
+                            <th>Amonio</th>
+                        </tr>
+                    </thead>
+                    <tfoot>
+                        <tr>
+                            <th>Data</th>
+                            <th>Tempo</th>
+                            <th>Temperatura</th>
+                            <th>Humidade</th>
+                            <th>Co2</th>
+                            <th>Amonio</th>
+                        </tr>
+                    </tfoot>
+                </table>
+
+        </main>
+
+        </div>
+
+</body>
+
+<script src="../js/TableCreate.js"></script>
+
+<script>
+    function checkLog_in() {
+        var text = "";
+        var key = sessionStorage.getItem('KEY');
+
+
+        if (key == "Log_in") {} else {
+            location.replace("../index.html");
+        }
+    }
+
+    function log_out() {
+        sessionStorage.setItem('KEY', 'Log_out');
+        location.replace("../index.html");
+    }
+
+
+    var data1 = null;
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+
+        console.log("DOM carregado ");
+        getValuesFromGoogleSheet(UpdateDatatable, "1");
+
+        function UpdateDatatable(results) {
+            if (results.message == "success" && results.data.records.length > 0) {
+                data1 = results.data.records;
+                var table = $('#table_dados').dataTable({
+                    lengthMenu: [
+                        [10, 25, 50, -1],
+                        [10, 25, 50, "All"]
+                    ],
+                    "language": {
+                        "lengthMenu": "Mostrar _MENU_ valores por página",
+                        "zeroRecords": "Não encontrou nada",
+                        "info": "Página _PAGE_ de _PAGES_",
+                        "infoEmpty": "Vazio",
+                        "infoFiltered": "(Filtro de _MAX_ dados)"
+                    },
+                    data: data1,
+                    "columns": [{
+                        "data": "Data"
+                    }, {
+                        "data": "Time"
+                    }, {
+                        "data": "Temperature"
+                    }, {
+                        "data": "Humidity"
+                    }, {
+                        "data": "Co2"
+                    }, {
+                        "data": "Amonio"
+                    }]
+                });
+            } else {
+                alert('ERRO - ' + results.message);
+            }
+        }
+    });
+</script>
+
+</html>

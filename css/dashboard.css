@@ -1,0 +1,94 @@
+.grid-container_das {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    grid-gap: 30px;
+    /*grid-column-gap: 200px;*/
+    padding: 10px;
+}
+
+.grid-container_das>div {
+    background-color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 30px;
+}
+
+.box_type:hover {
+    transition: 0.2s;
+    box-shadow: 0 0 1rem rgba(156, 156, 1, 0.4);
+    transform: scale(1.02);
+}
+
+.box_type svg {
+    font-size: 50px;
+}
+
+.value {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+.type {
+    font-size: 12px;
+    color: #72777a;
+}
+
+.box-temperature {
+    background-color: rgba(110, 142, 251, 0.1);
+    color: #6283f5;
+}
+
+.box-humidity {
+    background-color: rgba(229, 115, 115, 0.1);
+    color: #ef5350;
+}
+
+.box-co2 {
+    background-color: rgba(220, 231, 117, 0.2);
+    color: #afb42b;
+}
+
+.box-amonio {
+    background-color: rgba(225, 138, 101, 0.1);
+    color: #ff5722;
+}
+
+.box-Tempo_envio {
+    background-color: rgba(128, 193, 112, 0.23);
+    color: #80C170;
+}
+
+.box-num_aves {
+    background-color: rgba(255, 255, 153, 0.2);
+    color: #ff9900;
+}
+
+.box-percianas {
+    background-color: rgba(153, 255, 235, 0.2);
+    color: #00ffcc;
+}
+
+.box-vent {
+    background-color: rgba(128, 255, 0, 0.1);
+    color: #80ff00;
+}
+
+.box-nebu {
+    background-color: rgba(128, 223, 255, 0.2);
+    color: #00bfff;
+}
+
+.box-pav {
+    background-color: rgba(213, 128, 255, 0.2);
+    color: #aa00ff;
+}
+
+.box-user {
+    background-color: rgba(191, 191, 191, 0.4);
+    color: #808080;
+}
+
+.box-node {
+    background-color: rgba(255, 159, 128, 0.2);
+    color: #ff4000;
+}

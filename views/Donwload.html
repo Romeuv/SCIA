@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+<script src="../js/menu.js"></script>
+<script src="../js/googleSheed.js"></script>
+<script src="../js/TableCreate.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+
+
+
+    <title>DASH_SCIA</title>
+</head>
+
+<body onload="checkLog_in()">
+    <div class="flex-dashboard">
+        <sidebar>
+            <div class="sidebar-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="tabelas.html"><i class="fas fa-table"></i> Tabelas</a>
+                    </li>
+                    <li>
+                        <a href="Registos.html"><i class="fas fa-file-import"></i> Registos</a>
+                    </li>
+                    <li>
+                        <a href="pavilhoes.html"><i class="fab fa-houzz"></i> Pavilhões</a>
+                    </li>
+                    <li class="selected">
+                        <a href="Donwload.html"><i class="fas fa-cloud-download-alt"></i> Gráficos</a>
+                    </li>
+                    <li>
+                        <a href="definicao.html"><i class="fas fa-tachometer-alt"></i> Manual</a>
+                    </li>
+                    <li>
+                        <a href="Temp.html"><i class="fas fa-cloud-sun"></i> Meteo</a>
+                    </li>
+                    <li>
+                        <a href="Criador.html"><i class="fas fa-question-circle"></i> Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        <main>
+            <header>
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fa fa-bars"></i>
+                <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923"><img src="https://w.bookcdn.com/weather/picture/13_16923_1_8_ffffff_158_fff5d9_000000_0a0a0a_3_fff5d9_333333_0_6.png?scode=124&domid=&anc_id=6641" alt="booked.net" /></a>
+                <a onclick="log_out()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </header>
+            <div class="main-content">
+                <div class="main-content">
+
+                    <div id="chartdiv"></div>
+
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome/js/all.min.js"></script>
+
+    <script>
+        var data = [];
+        var price1 = 1000,
+            price2 = 1200;
+        var quantity = 200;
+
+        function checkLog_in() {
+            var text = "";
+            var key = sessionStorage.getItem('KEY');
+            if (key == "Log_in") {} else {
+                location.replace("../index.html");
+            }
+        }
+
+        function log_out() {
+            sessionStorage.setItem('KEY', 'Log_out');
+            location.replace("../index.html");
+        }
+
+        var Temperature_lable = new Array(),
+            time_lable = new Array(),
+            Co2_lable = new Array(),
+            Humidity_lable = new Array(),
+            Amonio_lable = new Array(),
+            xlable = new Array(),
+            numero_lable;
+        var data_lable = [];
+        var num;
+        var check = 0;
+
+        var price1 = 10,
+            price2 = 1;
+        // Create chart
+        var chart = am4core.create("chartdiv", am4charts.XYChart);
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            setInterval(function() {
+                getValuesFromGoogleSheet(UpdateDatatable, "1");
+
+                function UpdateDatatable(results) {
+
+                    if (results.message == "success" && results.data.records.length > 0) {
+                        for (var j = 0; j < results.data.records.length; j++) {
+                            Temperature_lable[j] = results.data.records[j]['Temperature'];
+                            time_lable[j] = results.data.records[j]['Time'];
+                            Humidity_lable[j] = results.data.records[j]['Humidity'];
+                            Co2_lable[j] = results.data.records[j]['Co2'];
+                            xlable[j] = results.data.records[j]['Data'];
+                            Amonio_lable[j] = results.data.records[j]['Amonio'];
+
+                            num = j;
+
+                            price1 = Temperature_lable[j];
+                            price2 = Humidity_lable[j];
+                            price3 = Co2_lable[j];
+                            price4 = Amonio_lable[j];
+                            var data_lable_asd = time_lable[j];
+
+                            data_lable.push({
+                                date1: new Date(time_lable[j]),
+                                price1: price1
+                            });
+
+                            data_lable.push({
+                                date2: new Date(time_lable[j]),
+                                price2: price2
+                            });
+
+                            data_lable.push({
+                                date3: new Date(time_lable[j]),
+                                price3: price3
+                            });
+                            data_lable.push({
+                                date4: new Date(time_lable[j]),
+                                price4: price4
+                            });
+
+                        }
+                        if (check == 0) {
+                            check = 1;
+                        }
+
+                    }
+                }
+
+                if (check == 1) {
+                    am4core.ready(function() {
+                        check = 2;
+                        // Themes begin
+                        am4core.useTheme(am4themes_animated);
+                        // Themes end
+
+
+
+
+                        chart.data = data_lable;
+
+
+                        var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
+                        dateAxis.renderer.grid.template.location = 0;
+                        dateAxis.renderer.labels.template.fill = am4core.color("#e59165");
+
+                        //var dateAxis2 = chart.xAxes.push(new am4charts.DateAxis());
+                        //dateAxis2.tooltip.disabled = true;
+                        //dateAxis2.renderer.grid.template.location = 1;
+                        //dateAxis2.renderer.labels.template.fill = am4core.color("#dfcc64");
+
+                        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                        valueAxis.tooltip.disabled = true;
+                        valueAxis.renderer.labels.template.fill = am4core.color("#006622");
+
+                        valueAxis.renderer.minWidth = 20;
+
+                        var valueAxis2 = chart.yAxes.push(new am4charts.ValueAxis());
+                        valueAxis2.tooltip.disabled = false;
+                        valueAxis2.renderer.labels.template.fill = am4core.color("#0033cc");
+                        valueAxis2.renderer.minWidth = 60;
+                        valueAxis2.syncWithAxis = valueAxis;
+
+                        var valueAxis3 = chart.yAxes.push(new am4charts.ValueAxis());
+                        valueAxis3.tooltip.disabled = false;
+                        valueAxis3.renderer.labels.template.fill = am4core.color("#ff0000");
+                        valueAxis3.renderer.minWidth = 60;
+                        valueAxis3.syncWithAxis = valueAxis;
+
+                        var valueAxis4 = chart.yAxes.push(new am4charts.ValueAxis());
+                        valueAxis4.tooltip.disabled = false;
+                        valueAxis4.renderer.labels.template.fill = am4core.color("#cc00ff");
+                        valueAxis4.renderer.minWidth = 60;
+                        valueAxis4.syncWithAxis = valueAxis;
+
+
+
+                        var series = chart.series.push(new am4charts.LineSeries());
+                        series.name = "Temperatura";
+                        series.dataFields.dateX = "date1";
+                        series.dataFields.valueY = "price1";
+                        series.tooltipText = "{valueY.value}";
+                        series.fill = am4core.color("#006622");
+                        series.stroke = am4core.color("#006622");
+                        //series.strokeWidth = 3;
+
+                        var series2 = chart.series.push(new am4charts.LineSeries());
+                        series2.name = "Humidade";
+                        series2.dataFields.dateX = "date2";
+                        series2.dataFields.valueY = "price2";
+                        series2.yAxis = valueAxis2;
+                        //series2.xAxis = dateAxis2;
+                        series2.tooltipText = "{valueY.value}";
+                        series2.fill = am4core.color("#0033cc");
+                        series2.stroke = am4core.color("#0033cc");
+                        //series2.strokeWidth = 3;
+
+                        var series3 = chart.series.push(new am4charts.LineSeries());
+                        series3.name = "Co2";
+                        series3.dataFields.dateX = "date3";
+                        series3.dataFields.valueY = "price3";
+                        series3.yAxis = valueAxis3;
+                        //series3.xAxis = dateAxis3;
+                        series3.tooltipText = "{valueY.value}";
+                        series3.fill = am4core.color("#ff0000");
+                        series3.stroke = am4core.color("#ff0000");
+                        //series3.strokeWidth = 3;
+
+                        var series4 = chart.series.push(new am4charts.LineSeries());
+                        series4.name = "Amonio";
+                        series4.dataFields.dateX = "date4";
+                        series4.dataFields.valueY = "price4";
+                        series4.yAxis = valueAxis4;
+                        //series4.xAxis = dateAxis4;
+                        series4.tooltipText = "{valueY.value}";
+                        series4.fill = am4core.color("#cc00ff");
+                        series4.stroke = am4core.color("#cc00ff");
+                        //series4.strokeWidth = 3;
+
+                        chart.cursor = new am4charts.XYCursor();
+                        //chart.cursor.xAxis = dateAxis2;
+
+                        var scrollbarX = new am4charts.XYChartScrollbar();
+                        scrollbarX.series.push(series);
+                        chart.scrollbarX = scrollbarX;
+
+                        chart.legend = new am4charts.Legend();
+                        chart.legend.parent = chart.plotContainer;
+                        chart.legend.zIndex = 30;
+
+                        valueAxis2.renderer.grid.template.strokeOpacity = 0.09;
+                        //dateAxis2.renderer.grid.template.strokeOpacity = 0.07;
+                        dateAxis.renderer.grid.template.strokeOpacity = 0.09;
+                        valueAxis.renderer.grid.template.strokeOpacity = 0.09;
+
+                    }); // end am4core.ready()
+
+                }
+
+
+            }, 1000);
+
+
+
+
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+
+
+    <title>DASH_SCIA</title>
+</head>
+
+<body onload="checkLog_in()">
+    <div class="flex-dashboard">
+        <sidebar>
+            <div class="sidebar-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="tabelas.html"><i class="fas fa-table"></i> Tabelas</a>
+                    </li>
+                    <li>
+                        <a href="Registos.html"><i class="fas fa-file-import"></i> Registos</a>
+                    </li>
+                    <li>
+                        <a href="pavilhoes.html"><i class="fab fa-houzz"></i> Pavilhões</a>
+                    </li>
+                    <li>
+                        <a href="Donwload.html"><i class="fas fa-cloud-download-alt"></i> Gráficos</a>
+                    </li>
+                    <li class="selected">
+                        <a href="definicao.html"><i class="fas fa-tachometer-alt"></i> Manual</a>
+                    </li>
+                    <li>
+                        <a href="Temp.html"><i class="fas fa-cloud-sun"></i> Meteo</a>
+                    </li>
+                    <li>
+                        <a href="Criador.html"><i class="fas fa-question-circle"></i> Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        <main>
+            <header>
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fa fa-bars"></i>
+                <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923"><img src="https://w.bookcdn.com/weather/picture/13_16923_1_8_ffffff_158_fff5d9_000000_0a0a0a_3_fff5d9_333333_0_6.png?scode=124&domid=&anc_id=6641" alt="booked.net" /></a>
+                <a onclick="log_out()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </header>
+            <div class="main-content">
+
+                <div class="row">
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" tabindex="1" onclick="myFunction()">
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <div id="slide_box" class="slidecontainer">
+                            <p>Temperatura:</p>
+                            <input type="range" min="10" max="40" step=".1" class="slider" id="slide_temp">
+                            <p>Valor: <span id="slide_temp_val"></span>º</p>
+                            <p style="font-size:9px">Temperatura pretendida</p>
+                            <p>Ventilação:</p>
+                            <input type="range" min="0" max="100" step=".5" class="slider" id="slide_vent">
+                            <p>Valor: <span id="slide_vent_val"></span>%</p>
+                            <p style="font-size:9px">Percentagem da Ventilação pretendida</p>
+                            <p>Percianas:</p>
+                            <input type="range" min="0" max="100" step=".5" class="slider" id="slide_per">
+                            <p>Valor: <span id="slide_per_val"></span>%</p>
+                            <p style="font-size:9px">Percentagem das Percianas pretendida</p>
+                            <p>Nebulização:</p>
+                            <input type="range" min="0" max="100" step=".5" class="slider" id="slide_hum">
+                            <p>Valor: <span id="slide_hum_val"></span>%</p>
+                            <p style="font-size:9px">Percentagem de Nebulização pretendida</p>
+                            <div>
+                                <p style="color:red">Tempo Envio:</p>
+                                <input type="range" min="1" max="10" step="1" class="slider" id="slide_tempo">
+                                <p style="color:red"><span id="slide_tempo_val"></span> Minutos</p>
+                                <p style="font-size:13px">Periodicidade de envio de dados pelas nodes</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" column ">
+                        <div class="grid-container ">
+                            <div class="item1">
+                                <p>
+                                    <i class="fas fa-temperature-low"></i>
+                                </p>
+                                <span id="slide_temp_val2"></span>%</p>
+                            </div>
+                            <div class="item2">
+                                <p>
+                                    <i class="fas fa-fan"></i>
+                                </p><span id="slide_vent_val2"></span>%</p>
+                            </div>
+                            <div class="item3">
+                                <p>
+                                    <i class="far fa-window-maximize "></i>
+                                </p><span id="slide_per_val2"></span>%</p>
+                            </div>
+                            <div class="item4">
+                                <p>
+                                    <i class="fas fa-tint"></i>
+                                </p><span id="slide_hum_val2"></span>%</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+    </main>
+    </div>
+    <script src="../plugins/bootstrap/js/bootstrap.min.js "></script>
+    <script src="../plugins/fontawesome/js/all.min.js "></script>
+    <script src="../js/ajax.js "></script>
+    <script src="../plugins/charts/chart.min.js "></script>
+    <script src="../js/menu.js "></script>
+    <script src="../js/googleSheed.js "></script>
+    <script src="../js/TableCreate.js "></script>
+    <script src="../js/manual.js "></script>
+
+
+
+    <script>
+        function checkLog_in() {
+            var text = "";
+            var key = sessionStorage.getItem('KEY');
+            if (key == "Log_in") {} else {
+                location.replace("../index.html");
+            }
+        }
+
+        function log_out() {
+            sessionStorage.setItem('KEY', 'Log_out');
+            location.replace("../index.html");
+        }
+        document.addEventListener("DOMContentLoaded", function(event) {
+            setInterval(function() {
+                insert_register();
+            }, 10000);
+            getValuesFromGoogleSheet(UpdateDatatable, "3");
+
+            function UpdateDatatable(results) {
+                if (results.message == "success" && results.data.records.length > 0) {
+                    var j = 0;
+                    var temperatura = results.data.records[j]['temperatura'];
+                    var humidade = results.data.records[j]['humidade'];
+                    var ventilacao = results.data.records[j]['ventilacao'];
+                    var nebulização = results.data.records[j]['nebulização'];
+                    var percianas = results.data.records[j]['percianas'];
+                    var manual = results.data.records[j]['manual'];
+                    var temp_resh = results.data.records[j]['temp_resh'];
+                    var slide_temp = document.getElementById("slide_temp");
+                    slide_temp.value = temperatura;
+                    var slide_hum = document.getElementById("slide_hum");
+                    slide_hum.value = humidade;
+                    var slide_per = document.getElementById("slide_per");
+                    slide_per.value = percianas;
+                    var slide_vent = document.getElementById("slide_vent");
+                    slide_vent.value = ventilacao;
+                    var slide_tempo = document.getElementById("slide_tempo");
+                    slide_tempo.value = temp_resh;
+                    var manual_botao = document.getElementById("myonoffswitch");
+                    manual_botao.checked = manual;
+                    slide_update();
+                }
+            }
+        });
+        slide_update();
+
+        function insert_register() {
+            var script_url = "https://script.google.com/macros/s/AKfycbyw_XM9GruqPOsffYAxBlY185z-lSvYqvqrCk1UeImoqRwwmX5_/exec";
+            var slide_temp = document.getElementById("slide_temp");
+            var temperatura = slide_temp.value;
+            var slide_hum = document.getElementById("slide_hum");
+            var humidade = slide_hum.value;
+            var nebulizacao = humidade;
+            var slide_per = document.getElementById("slide_per");
+            var percianas = slide_per.value;
+            var slide_vent = document.getElementById("slide_vent");
+            var ventilacao = slide_vent.value;
+            var slide_tempo = document.getElementById("slide_tempo");
+            var tempo = slide_tempo.value;
+            var auto_botao = document.getElementById("myonoffswitch");
+            var auto = auto_botao.checked;
+            var url = script_url + "?callback=ctrlq&temperatura=" + temperatura + "&humidade=" + humidade + "&ventilacao=" + ventilacao + "&percianas=" + percianas + "&nebulização=" + nebulizacao + "&manual=" + auto + "&temp_resh=" + tempo + "&action=cont_update";
+
+
+            var request = jQuery.ajax({
+                crossDomain: true,
+                url: url,
+                method: "GET",
+                dataType: "jsonp"
+            });
+            myFunction();
+        }
+
+        function myFunction() {
+            var toogle = document.getElementById("myonoffswitch");
+            var slide_temp = document.getElementById("slide_temp");
+            var slide_hum = document.getElementById("slide_hum");
+            var
+                slide_per = document.getElementById("slide_per");
+            var slide_vent = document.getElementById("slide_vent");
+            if (toogle.checked == true) {
+                slide_temp.disabled = false;
+                slide_temp.style.opacity = "1";
+                slide_hum.disabled = false;
+                slide_hum.style.opacity = "1";
+                slide_per.disabled = false;
+                slide_per.style.opacity = "1";
+                slide_vent.disabled = false;
+                slide_vent.style.opacity = "1";
+            } else {
+                slide_temp.disabled = true;
+                slide_temp.style.opacity = "0.3";
+                slide_hum.disabled = true;
+                slide_hum.style.opacity = "0.3";
+                slide_per.disabled = true;
+                slide_per.style.opacity = "0.3";
+                slide_vent.disabled = true;
+                slide_vent.style.opacity = "0.3";
+            }
+        }
+
+        function slide_update() {
+            var slide_vent = document.getElementById("slide_vent");
+            var slide_vent_val = document.getElementById("slide_vent_val");
+            var slide_vent_val2 = document.getElementById("slide_vent_val2");
+            slide_vent_val.innerHTML = slide_vent.value;
+            slide_vent_val2.innerHTML = slide_vent.value;
+            slide_vent.oninput = function() {
+                slide_vent_val.innerHTML = this.value;
+                slide_vent_val2.innerHTML = this.value;
+            }
+            var slide_per = document.getElementById("slide_per");
+            var slide_per_val = document.getElementById("slide_per_val");
+            var slide_per_val2 = document.getElementById("slide_per_val2");
+            slide_per_val.innerHTML = slide_per.value;
+            slide_per_val2.innerHTML = slide_per.value;
+            slide_per.oninput = function() {
+                slide_per_val.innerHTML = this.value;
+                slide_per_val2.innerHTML = this.value;
+            }
+            var slide_temp = document.getElementById("slide_temp");
+            var slide_temp_val = document.getElementById("slide_temp_val");
+            var slide_temp_val2 = document.getElementById("slide_temp_val2");
+            slide_temp_val.innerHTML = slide_temp.value;
+            slide_temp_val2.innerHTML = slide_temp.value;
+            slide_temp.oninput = function() {
+                slide_temp_val.innerHTML = this.value;
+                slide_temp_val2.innerHTML = this.value;
+            }
+            var slide_hum = document.getElementById("slide_hum");
+            var slide_hum_val = document.getElementById("slide_hum_val");
+            var slide_hum_val2 = document.getElementById("slide_hum_val2");
+            slide_hum_val.innerHTML = slide_hum.value;
+            slide_hum_val2.innerHTML = slide_hum.value;
+            slide_hum.oninput = function() {
+                slide_hum_val.innerHTML = this.value;
+                slide_hum_val2.innerHTML = this.value;
+            }
+            var slide_tempo = document.getElementById("slide_tempo");
+            var slide_tempo_val = document.getElementById("slide_tempo_val");
+            slide_tempo_val.innerHTML = slide_tempo.value;
+            slide_tempo.oninput = function() {
+                slide_tempo_val.innerHTML = this.value;
+            }
+        }
+    </script>
+
+</body>
+
+</html>

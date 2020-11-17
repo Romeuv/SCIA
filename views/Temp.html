@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <title>DASH_SCIA</title>
+</head>
+
+<body onload="checkLog_in()">
+    <div class="flex-dashboard">
+        <sidebar>
+            <div class="sidebar-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="tabelas.html"><i class="fas fa-table"></i> Tabelas</a>
+                    </li>
+                    <li>
+                        <a href="Registos.html"><i class="fas fa-file-import"></i> Registos</a>
+                    </li>
+                    <li>
+                        <a href="pavilhoes.html"><i class="fab fa-houzz"></i> Pavilhões</a>
+                    </li>
+                    <li>
+                        <a href="Donwload.html"><i class="fas fa-cloud-download-alt"></i> Gráficos</a>
+                    </li>
+                    <li>
+                        <a href="definicao.html"><i class="fas fa-tachometer-alt"></i> Manual</a>
+                    </li>
+                    <li class="selected">
+                        <a href="Temp.html"><i class="fas fa-cloud-sun"></i> Meteo</a>
+                    </li>
+                    <li>
+                        <a href="Criador.html"><i class="fas fa-question-circle"></i> Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        <main>
+            <header>
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fa fa-bars"></i>
+
+                <a onclick="log_out()"><i class="fas fa-sign-out-alt "></i> Sair</a>
+            </header>
+            <div class="main-content">
+                <div class="main-content-title">
+                    <h2>Meteorologia</h2>
+                </div>
+
+
+
+
+                <div class="row">
+                    <div class="column">
+                        <div id="chartdiv"></div>
+
+                    </div>
+                    <div class="column">
+                        <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923"><img src="https://w.bookcdn.com/weather/picture/3_16923_1_8_9a9c91_430_ffffff_333333_08488D_1_ffffff_333333_0_6.png?scode=124&domid=&anc_id=48126" alt="booked.net" /></a>
+                        <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923,18257,25806,56527"><img src="https://w.bookcdn.com/weather/picture/2_16923,18257,25806,56527_1_8_009fa0_350_ffffff_333333_08488D_1_ffffff_333333_0_6.png?scode=124&domid=&anc_id=94009" alt="booked.net" /></a>
+                    </div>
+                </div>
+
+            </div>
+    </div>
+    </main>
+    </div>
+
+    <script src="../plugins/bootstrap/js/bootstrap.min.js "></script>
+    <script src="../plugins/fontawesome/js/all.min.js "></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="../js/ajax.js"></script>
+    <script src="https://www.amcharts.com/lib/4/core.js"></script>
+    <script src="https://www.amcharts.com/lib/4/charts.js"></script>
+    <script src="https://www.amcharts.com/lib/4/maps.js"></script>
+    <script src="https://www.amcharts.com/lib/4/geodata/continentsLow.js"></script>
+    <script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+    <script>
+        function checkLog_in() {
+            var text = "";
+            var key = sessionStorage.getItem('KEY');
+
+
+            if (key == "Log_in") {} else {
+                location.replace("../index.html");
+            }
+        }
+
+        function log_out() {
+            sessionStorage.setItem('KEY', 'Log_out');
+            location.replace("../index.html");
+        }
+
+        am4core.ready(function() {
+
+            // Themes begin
+            am4core.useTheme(am4themes_animated);
+
+            var mapChart = am4core.create("chartdiv", am4maps.MapChart);
+            mapChart.panBehavior = "rotateLongLat";
+            try {
+                mapChart.geodata = am4geodata_continentsLow;
+            } catch (e) {
+                mapChart.raiseCriticalError(new Error("Map geodata could not be loaded. Please download the latest <a href=\"https://www.amcharts.com/download/download-v4/\">amcharts geodata</a> and extract its contents into the same directory as your amCharts files."));
+            }
+
+            mapChart.projection = new am4maps.projections.Miller;
+            // prevent dragging
+            mapChart.seriesContainer.draggable = false;
+            mapChart.seriesContainer.resizable = false;
+            // prevent zooming
+            mapChart.minZoomLevel = 0.7;
+            // countries
+            var countriesSeries = mapChart.series.push(new am4maps.MapPolygonSeries());
+            countriesSeries.useGeodata = true;
+            countriesSeries.mapPolygons.template.fill = am4core.color("#5c9fdd");
+            countriesSeries.mapPolygons.template.stroke = am4core.color("#5c9fdd");
+
+            var colorSet = new am4core.ColorSet();
+            var polygonTemplate = countriesSeries.mapPolygons.template;
+
+            // night series
+            var nightSeries = mapChart.series.push(new am4maps.MapPolygonSeries());
+            nightSeries.ignoreBounds = true;
+            var night = nightSeries.mapPolygons.create();
+            night.fill = am4core.color("#000000");
+            night.fillOpacity = 0.35;
+            night.interactionsEnabled = false;
+            night.stroke = am4core.color("#000000");
+            night.strokeOpacity = 0;
+
+            var night2 = nightSeries.mapPolygons.create();
+            night2.fill = am4core.color("#000000");
+            night2.fillOpacity = 0.35;
+            night2.interactionsEnabled = false;
+            night2.stroke = am4core.color("#000000");
+            night2.strokeOpacity = 0;
+
+
+            // images series
+            var imagesSeries = mapChart.series.push(new am4maps.MapImageSeries())
+            var tooltip = imagesSeries.tooltip;
+            tooltip.label.padding(15, 15, 15, 15);
+            tooltip.background.cornerRadius = 25;
+
+            // sun
+            var sun = imagesSeries.mapImages.create();
+            var suncircle = sun.createChild(am4core.Circle);
+            suncircle.radius = 10;
+            suncircle.fill = am4core.color("#ffba00");
+            suncircle.strokeOpacity = 0;
+            sun.filters.push(new am4core.BlurFilter());
+
+            // graticule
+            var graticuleSeires = mapChart.series.push(new am4maps.GraticuleSeries());
+            graticuleSeires.mapLines.template.stroke = am4core.color("#ffffff");
+            graticuleSeires.fitExtent = false;
+
+            // add slider to chart container in order not to occupy space
+            var slider = mapChart.chartContainer.createChild(am4core.Slider);
+            slider.start = 0.5;
+            slider.valign = "bottom";
+            slider.padding(0, 30, 0, 80);
+            slider.background.padding(0, 30, 0, 80);
+            slider.marginBottom = 15;
+            slider.events.on("rangechanged", function() {
+                updateDateNight(new Date().getTime() + (slider.start - 0.5) * 1000 * 60 * 60 * 24 * 2 * 2);
+            })
+
+
+            function updateDateNight(time) {
+                var sunPosition = solarPosition(time);
+                sun.latitude = sunPosition.latitude;
+                sun.longitude = sunPosition.longitude;
+                sun.deepInvalidate();
+
+                night.multiPolygon = am4maps.getCircle(sunPosition.longitude + 180, -sunPosition.latitude, 91);
+                night2.multiPolygon = am4maps.getCircle(sunPosition.longitude + 180, -sunPosition.latitude, 89);
+                nightSeries.invalidate();
+            }
+
+            var button = mapChart.createChild(am4core.Button);
+            button.align = "right";
+            button.marginTop = 40;
+            button.marginRight = 40;
+            button.valign = "top";
+            button.label.text = "Show Globe";
+
+            button.events.on("hit", function() {
+                if (button.label.text == "Show Globe") {
+                    button.label.text = "Show Map";
+                    mapChart.projection = new am4maps.projections.Orthographic;
+
+                } else {
+                    button.label.text = "Show Globe";
+                    mapChart.projection = new am4maps.projections.Miller;
+                }
+            })
+
+            // all sun position calculation is taken from: http://bl.ocks.org/mbostock/4597134
+            var offset = new Date().getTimezoneOffset() * 60 * 1000;
+
+            function solarPosition(time) {
+                var centuries = (time - Date.UTC(2000, 0, 1, 12)) / 864e5 / 36525, // since J2000
+                    longitude = (am4core.time.round(new Date(time), "day", 1).getTime() - time - offset) / 864e5 * 360 - 180;
+
+                return am4maps.geo.normalizePoint({
+                    longitude: longitude - equationOfTime(centuries) * am4core.math.DEGREES,
+                    latitude: solarDeclination(centuries) * am4core.math.DEGREES
+                });
+            };
+
+
+            // Equations based on NOAA’s Solar Calculator; all angles in Amam4charts.math.RADIANS.
+            // http://www.esrl.noaa.gov/gmd/grad/solcalc/
+
+            function equationOfTime(centuries) {
+                var e = eccentricityEarthOrbit(centuries),
+                    m = solarGeometricMeanAnomaly(centuries),
+                    l = solarGeometricMeanLongitude(centuries),
+                    y = Math.tan(obliquityCorrection(centuries) / 2);
+
+                y *= y;
+                return y * Math.sin(2 * l) -
+                    2 * e * Math.sin(m) +
+                    4 * e * y * Math.sin(m) * Math.cos(2 * l) -
+                    0.5 * y * y * Math.sin(4 * l) -
+                    1.25 * e * e * Math.sin(2 * m);
+            }
+
+            function solarDeclination(centuries) {
+                return Math.asin(Math.sin(obliquityCorrection(centuries)) * Math.sin(solarApparentLongitude(centuries)));
+            }
+
+            function solarApparentLongitude(centuries) {
+                return solarTrueLongitude(centuries) - (0.00569 + 0.00478 * Math.sin((125.04 - 1934.136 * centuries) * am4core.math.RADIANS)) * am4core.math.RADIANS;
+            }
+
+            function solarTrueLongitude(centuries) {
+                return solarGeometricMeanLongitude(centuries) + solarEquationOfCenter(centuries);
+            }
+
+            function solarGeometricMeanAnomaly(centuries) {
+                return (357.52911 + centuries * (35999.05029 - 0.0001537 * centuries)) * am4core.math.RADIANS;
+            }
+
+            function solarGeometricMeanLongitude(centuries) {
+                var l = (280.46646 + centuries * (36000.76983 + centuries * 0.0003032)) % 360;
+                return (l < 0 ? l + 360 : l) / 180 * Math.PI;
+            }
+
+            function solarEquationOfCenter(centuries) {
+                var m = solarGeometricMeanAnomaly(centuries);
+                return (Math.sin(m) * (1.914602 - centuries * (0.004817 + 0.000014 * centuries)) +
+                    Math.sin(m + m) * (0.019993 - 0.000101 * centuries) +
+                    Math.sin(m + m + m) * 0.000289) * am4core.math.RADIANS;
+            }
+
+            function obliquityCorrection(centuries) {
+                return meanObliquityOfEcliptic(centuries) + 0.00256 * Math.cos((125.04 - 1934.136 * centuries) * am4core.math.RADIANS) * am4core.math.RADIANS;
+            }
+
+            function meanObliquityOfEcliptic(centuries) {
+                return (23 + (26 + (21.448 - centuries * (46.8150 + centuries * (0.00059 - centuries * 0.001813))) / 60) / 60) * am4core.math.RADIANS;
+            }
+
+            function eccentricityEarthOrbit(centuries) {
+                return 0.016708634 - centuries * (0.000042037 + 0.0000001267 * centuries);
+            }
+
+
+        }); // end am4core.ready()
+    </script>
+</body>
+
+</html>

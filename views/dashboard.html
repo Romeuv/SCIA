@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/all.css">
+    <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../plugins/fontawesome/css/all.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+    <title>DASH_SCIA</title>
+</head>
+
+
+
+<body onload="checkLog_in()">
+    <div class="flex-dashboard">
+        <sidebar id="sidebar">
+            <div class="sidebar-title">
+                <img src="../images/galo1.png" alt="">
+                <h2>SCIA</h2>
+            </div>
+            <div class="menu">
+                <ul>
+                    <li class="selected">
+                        <a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="tabelas.html"><i class="fas fa-table"></i> Tabelas</a>
+                    </li>
+                    <li>
+                        <a href="Registos.html"><i class="fas fa-file-import"></i> Registos</a>
+                    </li>
+                    <li>
+                        <a href="pavilhoes.html"><i class="fab fa-houzz"></i> Pavilhões</a>
+                    </li>
+                    <li>
+                        <a href="Donwload.html"><i class="fas fa-cloud-download-alt"></i> Gráficos</a>
+                    </li>
+                    <li>
+                        <a href="definicao.html"><i class="fas fa-tachometer-alt"></i> Manual</a>
+                    </li>
+                    <li>
+                        <a href="Temp.html"><i class="fas fa-cloud-sun"></i> Meteo</a>
+                    </li>
+                    <li>
+                        <a href="Criador.html"><i class="fas fa-question-circle"></i> Ajuda</a>
+                    </li>
+                </ul>
+            </div>
+        </sidebar>
+        <main>
+            <header>
+                <i id="iconMenu" onclick="responsiveSidebar()" class="fa fa-bars"></i>
+                <a target="_blank" href="https://ibooked.com.br/weather/leiria-16923"><img src="https://w.bookcdn.com/weather/picture/13_16923_1_8_ffffff_158_fff5d9_000000_0a0a0a_3_fff5d9_333333_0_6.png?scode=124&domid=&anc_id=6641" alt="booked.net" /></a>
+                <a onclick="log_out()"><i class="fas fa-sign-out-alt"></i> Sair</a>
+            </header>
+            <div class="main-content">
+                <div class="main-content-title">
+                </div>
+                <div class="grid-container_das">
+                    <div class="item1">
+                        <div class="box_type">
+                            <div class="box-temperature">
+                                <i class="fas fa-temperature-low"></i>
+                                <div class="value">
+                                    <span id="temp_med_lable"></span> ºC
+                                </div>
+                                <div class="type">Temperatura</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item2 box_type">
+                        <div class="box-temperature">
+                            <i class="fas fa-tint"></i>
+                            <div class="value">
+                                <span id="humi_med_lable"></span> %
+                            </div>
+                            <div class="type">Humidade</div>
+                        </div>
+                    </div>
+                    <div class="item3 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="fab fa-free-code-camp"></i>
+                            <div class="value">
+                                <span id="co_med_lable"></span> ppm
+                            </div>
+                            <div class="type">CO2</div>
+                        </div>
+                    </div>
+                    <div class="item4 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="fas fa-atom"></i>
+                            <div class="value">
+                                <span id="amo_med_lable"></span> ppm
+                            </div>
+                            <div class="type">Amónio</div>
+                        </div>
+                    </div>
+                    <div class="item5 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="far fa-clock"></i>
+                            <div class="value">
+                                <span id="tempo_lable"></span> Minutos
+                            </div>
+                            <div class="type">Tempo envio</div>
+                        </div>
+                    </div>
+                    <div class="item6 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="fas fa-egg"></i>
+                            <div class="value">
+                                <span id="numAves_lable"></span>
+                            </div>
+                            <div class="type">Numero de aves</div>
+                        </div>
+                    </div>
+                    <div class="item7 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="far fa-window-maximize"></i>
+                            <div class="value">
+                                <span id="perc_per_lable"></span> %
+                            </div>
+                            <div class="type">Percianas</div>
+                        </div>
+                    </div>
+                    <div class="item8 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="fas fa-fan"></i>
+                            <div class="value">
+                                <span id="ven_per_lable"></span> %
+                            </div>
+                            <div class="type">Ventilação</div>
+                        </div>
+                    </div>
+                    <div class="item12 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="fas fa-braille"></i>
+                            <div class="value">
+                                <span id="nebu_per_lable"></span> %
+                            </div>
+                            <div class="type">Nebulização</div>
+                        </div>
+                    </div>
+                    <div class="item9 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="fas fa-warehouse"></i>
+                            <div class="value">
+                                <span id="num_pav_lable"></span>
+                            </div>
+                            <div class="type">Numero de pavilhôes</div>
+                        </div>
+                    </div>
+                    <div class="item10 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="far fa-user"></i>
+                            <div class="value">
+                                <span id="user_lable"></span>
+                            </div>
+                            <div class="type">User</div>
+                        </div>
+                    </div>
+                    <div class="item11 box_type">
+                        <div class="box-icon box-temperature">
+                            <i class="fab fa-node"></i>
+                            <div class="value">
+                                <span id="node_lable"></span>
+                            </div>
+                            <div class="type">Node</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../plugins/fontawesome/js/all.min.js"></script>
+    <script src="../plugins/charts/chart.min.js"></script>
+    <script src="../js/menu.js"></script>
+    <script src="../js/googleSheed.js"></script>
+    <script src="../js/TableCreate.js"></script>
+
+
+    <script type="text/javascript">
+        var email_ke;
+
+        function checkLog_in() {
+            var text = "";
+            var key = sessionStorage.getItem('KEY');
+            email_ke = sessionStorage.getItem('email');
+
+
+            if (key != "Log_in") {
+                location.replace("../index.html");
+            }
+        }
+
+        function log_out() {
+            sessionStorage.setItem('KEY', 'Log_out');
+            sessionStorage.setItem('email', 'NULL');
+            location.replace("../index.html");
+        }
+
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            setInterval(function() {
+                getValuesFromGoogleSheet(UpdateDatatable, "4");
+
+                function UpdateDatatable(results) {
+
+                    if (results.message == "success" && results.data.records.length > 0) {
+                        var tempo, num_pav, numAves, node, user, ven_per, nebu_per, perc_per, temp_med, humi_med, co_med, amo_med;
+                        var j = 0;
+                        tempo = results.data.records[j]['tempo'];
+                        num_pav = results.data.records[j]['num_pav'];
+                        numAves = results.data.records[j]['numAves'];
+                        node = results.data.records[j]['node'];
+                        user = results.data.records[j]['user'];
+                        ven_per = results.data.records[j]['ven_per'];
+                        nebu_per = results.data.records[j]['nebu_per'];
+                        perc_per = results.data.records[j]['perc_per'];
+                        temp_med = results.data.records[j]['temp_med'];
+                        humi_med = results.data.records[j]['humi_med'];
+                        co_med = results.data.records[j]['co_med'];
+                        amo_med = results.data.records[j]['amo_med'];
+
+
+                        document.getElementById('tempo_lable').innerHTML = tempo;
+                        document.getElementById('num_pav_lable').innerHTML = num_pav;
+                        document.getElementById('numAves_lable').innerHTML = numAves;
+                        document.getElementById('node_lable').innerHTML = node;
+                        document.getElementById('user_lable').innerHTML = user;
+                        document.getElementById('ven_per_lable').innerHTML = ven_per;
+                        document.getElementById('nebu_per_lable').innerHTML = nebu_per;
+                        document.getElementById('perc_per_lable').innerHTML = perc_per;
+                        document.getElementById('temp_med_lable').innerHTML = temp_med;
+                        document.getElementById('humi_med_lable').innerHTML = humi_med;
+                        document.getElementById('co_med_lable').innerHTML = co_med;
+                        document.getElementById('amo_med_lable').innerHTML = amo_med;
+                    }
+                }
+            }, 1000);
+        });
+    </script>
+
+</body>
+
+</html>
