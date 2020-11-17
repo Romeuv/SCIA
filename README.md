@@ -54,7 +54,7 @@ This project was made using the follow technologies:
 # :construction_worker: How to execute
 ```bash
 # Clone Repository
-$ git clone https://github.com/Romeuv/Happy.git
+$ git clone https://github.com/Romeuv/Scia.git
 ```
 
 ### 💻 Execute Web Project
